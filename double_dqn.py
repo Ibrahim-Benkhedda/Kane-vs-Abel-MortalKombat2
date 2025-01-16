@@ -43,8 +43,6 @@ class DoubleDQN(DQN):
             # Compute loss (L2 or Huber loss)
             loss = F.smooth_l1_loss(current_q_values, target_q_values)
 
-            ### END OF CODE FOR Double DQN extension
-
             losses.append(loss.item())
 
             # Optimize the q-network
