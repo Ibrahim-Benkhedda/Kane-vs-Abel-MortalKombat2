@@ -11,7 +11,7 @@ This project is still on a working progress.
 
 ## Example: Kane (Double DQN) vs Very Easy Opponent
 
-The following example shows **Kane**, using Double DQN architecture, competing against a very easy CPU opponent in **Mortal Kombat II (Genesis version)**.
+The following example shows **Kane**, using Double DQN architecture playing with **Liu Kang** (Left character), competing against a very easy CPU opponent in **Mortal Kombat II (Genesis version)**.
 
 ![Kane vs Very Easy Opponent](replays/output.gif)
 
