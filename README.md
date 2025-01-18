@@ -13,7 +13,7 @@ This project is still on a working progress.
 
 The following example shows **Kane**, using Double DQN architecture playing with **Liu Kang** (Left character), competing against a very easy CPU opponent in **Mortal Kombat II (Genesis version)**.
 
-![Kane vs Very Easy Opponent](replays/output.gif) ![Kane vs Very Easy Opponent](replays/output.gif) ![Kane vs Very Easy Opponent](replays/output.gif)
+![Kane vs Very Easy Opponent](replays/output.gif) ![Kane vs Very Easy Opponent](replays/LiuKang-Jax-VeryEasy.gif)
 
 
 
