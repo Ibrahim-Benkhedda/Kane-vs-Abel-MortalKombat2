@@ -1,0 +1,38 @@
+Root Selector
+├── Main Combat Phase
+│   ├── Distance-Based Strategy (Selector)
+│   │   ├── Close Range (Selector)
+│   │   │   ├── Condition: Opponent Airborne → Air Throw
+│   │   │   ├── Condition: Opponent Blocking (Selector)
+│   │   │   │   ├── Condition: Opponent Crouching → High Kick
+│   │   │   │   │   ├── Success → Chain into Combo/Special
+│   │   │   │   │   └── Failure → Test Reaction with LP/LK
+│   │   │   │   ├── Condition: Opponent Standing → Low Kick
+│   │   │   │   │   ├── Success → Chain into Combo/Special
+│   │   │   │   │   └── Failure → Test Reaction with LP/LK
+│   │   │   │   └── Mix-Up: Attempt Throw
+│   │   │   ├── Action: Scissors/Combo
+│   │   │   └── Test Reaction: LP/LK
+│   │   ├── Mid Range (Selector)
+│   │   │   ├── Condition: Opponent Open → Spear
+│   │   │   │   └── Follow-Up: Combo or Scissors
+│   │   │   ├── Action: Teleport Punch
+│   │   │   └── Test Reaction: Normal Attacks
+│   │   └── Far Range (Selector)
+│   │       ├── Action: Projectile (Zoning)
+│   │       ├── Action: Teleport Punch (Close Gap)
+│   │       └── Defensive Retreat
+│   └── Defensive Mode (Selector)
+│       ├── Condition: Low Health → Block/Evade
+│       └── Counter with Teleport Punch or Normal Attack
+└── Finishing Phase
+    ├── Condition: Fatality Triggered → Execute Fatality Sequence
+    │   ├── Option 1: Up, Up, HP
+    │   ├── Option 2: D, D, Up, Up, HP
+    │   └── Option 3: Hold HP, Release After 3 Seconds
+    ├── Condition: Friendship Triggered → Execute Friendship Sequence
+    │   └── Action: B, B, D, HK
+    ├── Condition: Babality Triggered → Execute Babality Sequence
+    │   └── Action: D, B, B, HK
+    └── Condition: Stage Fatality Triggered → Execute Stage Fatality Sequence
+        └── Action: D, F, F, BL

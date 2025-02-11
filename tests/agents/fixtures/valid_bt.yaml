@@ -1,0 +1,16 @@
+node:
+  type: Selector
+  name: "Approach Enemy or Jump"
+  children:
+    - type: Sequence
+      name: "Move Right"
+      children:
+        - type: Condition
+          name: "Enemy to Right"
+          properties:
+            condition: "is_enemy_to_the_right"
+        - type: Action
+          name: "Move Right"
+          properties:
+            action_id: "MOVE_RIGHT_ID"
+            frames_needed: 5

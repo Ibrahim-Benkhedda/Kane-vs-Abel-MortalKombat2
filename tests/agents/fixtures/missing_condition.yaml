@@ -1,0 +1,5 @@
+node:
+  type: Condition
+  name: "Missing Condition"
+  properties:
+    condition: "non_existent_condition"
