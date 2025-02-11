@@ -41,4 +41,34 @@ This repository is organized to clearly separate its various components, making 
 └── tests/                   # Unit and integration tests for various modules and functionalities
 ```
 
+# Usage 
+This section describes how to train, test, and run the arena to evaluate different agents in the Mortal Kombat II environment.
+
+## Training RL Agents
+
+To train a reinforcement learning (RL) agent, run the following command:
+
+```bash
+python train.py
+```
+
+## Testing/Evaluating RL Agents
+
+To evaluate against CPU opponents a pre-trained RL agent, use the test.py script. For example, to test a DQN-based agent:
+```bash
+python test.py \
+    --model_path "models/kane/DoubleDQN_without_curriculum_4M_VeryEasyVsJax_Ln.zip" \
+    --model_type DUELINGDDQN \
+    --state "Level1.LiuKangVsJax"
+```
+## Running the Arena for Agent Comparison
+The `arena.py` script allows you to evaluate different agents (current support: human input, DQNs and Behaviour Trees Agents) against each other in real-time. For example, to have a human player compete against a DQN agent, run:
+
+```bash
+python arena.py \
+    --p1-type human \
+    --p2-type double_dqn \
+    --p2-model "models/kane/DoubleDQN_without_curriculum_4M_VeryEasyVsJax_Ln.zip"
+```
+
 
