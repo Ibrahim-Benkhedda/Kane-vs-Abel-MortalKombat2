@@ -1,7 +1,5 @@
 # Overview
-
-This repository contains the code for training an agent to play Mortal Kombat II using reinforcement learning.
-
+The project is about two AIagents: **Abel** (Behaviour Tree) and **Kane** (Dueling Double DQN) competing against each other in Mortal Kombat II: Genesis using Gymnasium and stable-retro library.
 # Example: Kane (Double DQN) vs Very Easy Opponent
 The following example shows **Kane**, using Double DQN architecture playing with **Liu Kang** (Left character), competing against a very easy CPU opponent in **Mortal Kombat II (Genesis version)**.
 
