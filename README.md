@@ -2,6 +2,12 @@
 
 This repository contains the code for training an agent to play Mortal Kombat II using reinforcement learning.
 
+# Example: Kane (Double DQN) vs Very Easy Opponent
+The following example shows **Kane**, using Double DQN architecture playing with **Liu Kang** (Left character), competing against a very easy CPU opponent in **Mortal Kombat II (Genesis version)**.
+
+![Kane vs Very Easy Opponent](data/replays/LiuKang-VeryEasy.gif) ![Kane vs Very Easy Opponent](data/replays/LiuKang-Jax-VeryEasy.gif)
+
+
 # Packages 
 This project is developed and tested using Python **3.10.12** on **WSL Ubuntu**. The project depends on the following packages:
 - **Stable Baselines 3 (SB3):** `stable_baselines3==2.4.0`
@@ -13,11 +19,6 @@ This project is developed and tested using Python **3.10.12** on **WSL Ubuntu**.
 
 **Note for WSL Users:**  
 When running GUI applications under WSL, an X server is required to display graphical interfaces. We recommend using **XLaunch**, a tool that helps configure and launch an X server (such as VcXsrv) on Windows, allowing you to run Linux GUI applications within your WSL environment.
-
-# Example: Kane (Double DQN) vs Very Easy Opponent
-The following example shows **Kane**, using Double DQN architecture playing with **Liu Kang** (Left character), competing against a very easy CPU opponent in **Mortal Kombat II (Genesis version)**.
-
-![Kane vs Very Easy Opponent](data/replays/LiuKang-VeryEasy.gif) ![Kane vs Very Easy Opponent](data/replays/LiuKang-Jax-VeryEasy.gif)
 
 # Folder Structure Overview
 
