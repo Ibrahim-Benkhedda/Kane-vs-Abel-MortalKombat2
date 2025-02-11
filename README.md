@@ -3,9 +3,16 @@
 This repository contains the code for training an agent to play Mortal Kombat II using reinforcement learning.
 
 # Packages 
-- Stable-Retro: Provides the environment (e.g., the game).
-- Gymnasium: Acts as the interface for interacting with the environment (reset, step, render, etc.).
-- Stable-Baselines3: Provides the RL algorithms to train an agent in the environment.
+This project is developed and tested using Python **3.10.12** on **WSL Ubuntu**. The project depends on the following packages:
+- **Stable Baselines 3 (SB3):** `stable_baselines3==2.4.0`
+- **Stable Retro (Retro):** `stable-retro==0.9.2`
+- **Gymnasium:** `gymnasium==1.0.0`
+- **Optuna:** `optuna==4.1.0` (For hyperparameters search)
+- **PyTorch (torch):** `torch==2.5.1`
+- **TensorBoard:** `tensorboard==2.18.0`
+
+**Note for WSL Users:**  
+When running GUI applications under WSL, an X server is required to display graphical interfaces. We recommend using **XLaunch**, a tool that helps configure and launch an X server (such as VcXsrv) on Windows, allowing you to run Linux GUI applications within your WSL environment.
 
 # Example: Kane (Double DQN) vs Very Easy Opponent
 The following example shows **Kane**, using Double DQN architecture playing with **Liu Kang** (Left character), competing against a very easy CPU opponent in **Mortal Kombat II (Genesis version)**.
