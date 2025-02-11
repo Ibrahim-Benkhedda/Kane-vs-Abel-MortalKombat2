@@ -9,6 +9,7 @@ This repository contains the code for training an agent to play Mortal Kombat II
 
 # Example: Kane (Double DQN) vs Very Easy Opponent
 The following example shows **Kane**, using Double DQN architecture playing with **Liu Kang** (Left character), competing against a very easy CPU opponent in **Mortal Kombat II (Genesis version)**.
+
 ![Kane vs Very Easy Opponent](data/replays/LiuKang-VeryEasy.gif) ![Kane vs Very Easy Opponent](data/replays/LiuKang-Jax-VeryEasy.gif)
 
 # Folder Structure Overview
