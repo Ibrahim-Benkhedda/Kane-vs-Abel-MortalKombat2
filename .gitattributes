@@ -1,4 +1,6 @@
 *.py linguist-detectable
 *.py linguist-language=Python
 
+*.ipynb linguist-vendored
+
 src/mkai/* linguist-detectable
