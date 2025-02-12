@@ -1,1 +1,4 @@
+*.py linguist-detectable
+*.py linguist-language=Python
+
 src/mkai/* linguist-detectable
