@@ -3,7 +3,10 @@ The project is about two AIagents: **Abel** (Behaviour Tree) and **Kane** (Dueli
 # Example: Kane (Double DQN) vs Very Easy Opponent
 The following example shows **Kane**, using Double DQN architecture playing with **Liu Kang** (Left character), competing against a very easy CPU opponent in **Mortal Kombat II (Genesis version)**.
 
-![Kane vs Very Easy Opponent](data/replays/LiuKang-VeryEasy.gif) ![Kane vs Very Easy Opponent](data/replays/LiuKang-Jax-VeryEasy.gif)
+<p align="center">
+  <img src="data/replays/LiuKang-VeryEasy.gif" alt="Kane vs Very Easy Opponent">
+  <img src="data/replays/LiuKang-Jax-VeryEasy.gif" alt="Kane vs Very Easy Opponent">
+</p>
 
 
 # Packages 
