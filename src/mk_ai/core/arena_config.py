@@ -25,7 +25,7 @@ class ArenaConfig:
     p1_agent: AgentConfig = AgentConfig(agent_type="human")
     p2_agent: AgentConfig = AgentConfig(
         agent_type="double_dqn",
-        model_path="models/DDQN_4M_with_lrSchedule_frameskip_24_actions"
+        model_path="models/kane/DDQN_4M_with_lrSchedule_frameskip_24_actions"
     )
 
 
