@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Action Space - Kane vs Abel Arena</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Action Space";
+        var mkdocs_page_input_path = "action_space.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> Kane vs Abel Arena
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="arena.html">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Environment</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Action Space</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#action-space-representations">Action Space Representations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#action-generator">Action Generator</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#yaml-configuration">YAML Configuration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#generated-mappings">Generated Mappings</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#agent-action-processing">Agent Action Processing</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#rl-agents-dqn-double-dqn-dueling-dqn">RL Agents (DQN, Double DQN, Dueling DQN)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#behavior-tree-agents">Behavior Tree Agents</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#human-agents">Human Agents</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#complete-action-flow">Complete Action Flow</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#visualizing-the-flow">Visualizing the Flow</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation-details">Implementation Details</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#shared-action-space">Shared Action Space</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#adding-custom-actions">Adding Custom Actions</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#debugging-tips">Debugging Tips</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#related-files">Related Files</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="adding_diff_game.html">Additional Games</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Agents</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="behaviour_tree.html">Behaviour Tree</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="human_input.html">Human Input</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="dqn.html">DQN</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">RL Training</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="model_training.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="curriculum_learning.html">Curriculum Learning</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="model_evaluation.html">Model Evaluation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="model_finetuning.html">Fine-tuning Models</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">Kane vs Abel Arena</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Environment</li>
+      <li class="breadcrumb-item active">Action Space</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="action-space-in-kane-vs-abel-mortal-kombat-ii">Action Space in Kane vs Abel Mortal Kombat II</h1>
+<p>This document explains how the action system works in the Mortal Kombat II environment, including action generation, mapping, and how different agents interface with it.</p>
+<h2 id="action-space-representations">Action Space Representations</h2>
+<p>The action system uses three core representations that are translated between different components:</p>
+<ol>
+<li><strong>Button Names</strong>: Human-readable commands (<code>LEFT</code>, <code>RIGHT</code>, <code>A</code>, <code>B</code>, etc.)</li>
+<li><strong>Binary Arrays</strong>: Stable-Retro's internal format (<code>[0,0,1,0,0,0,0,0]</code>)</li>
+<li><strong>Action IDs</strong>: Integer indices used to reference specific actions (<code>0</code>, <code>1</code>, <code>2</code>, etc.)</li>
+</ol>
+<h2 id="action-generator">Action Generator</h2>
+<p>The <code>ActionGenerator</code> class creates and manages mappings between these representations:</p>
+<pre><code class="language-python">from mk_ai.utils import ActionGenerator
+
+# Load from YAML configuration
+action_gen = ActionGenerator(filename=&quot;env_config.yaml&quot;)
+action_gen.build()  # Must be called explicitly to create mappings
+
+# Access the generated mappings
+action_map = action_gen.action_map  # Maps names to IDs: {&quot;LEFT&quot;: 1, &quot;RIGHT&quot;: 2}
+</code></pre>
+<h3 id="yaml-configuration">YAML Configuration</h3>
+<p>The env_config.yaml file defines the buttons and valid action combinations:</p>
+<pre><code class="language-yaml">buttons:
+  - B
+  - A
+  - MODE
+  - START
+  - UP
+  - DOWN
+  - LEFT
+  - RIGHT
+  - C
+  - Y
+  - X
+  - Z
+
+actions:
+  - []  # Neutral
+  - [LEFT]
+  - [RIGHT]
+  - [LEFT, DOWN]
+  - [RIGHT, DOWN]
+  # ...more combinations
+</code></pre>
+<h3 id="generated-mappings">Generated Mappings</h3>
+<p>The <code>ActionGenerator</code> creates several key mappings:</p>
+<pre><code class="language-python"># Button list - individual inputs
+buttons = ['B', 'A', 'MODE', 'START', 'UP', 'DOWN', 'LEFT', 'RIGHT', 'C', 'Y', 'X', 'Z']
+
+# Action combinations with auto-generated names
+action_map = {
+    'NEUTRAL': 0,
+    'LEFT': 1,
+    'RIGHT': 2,
+    'LEFT_DOWN': 3,
+    'RIGHT_DOWN': 4,
+    # ...
+}
+
+# Binary representation for each action
+binary_mapping = {
+    0: [0,0,0,0,0,0,0,0,0,0,0,0],  # NEUTRAL
+    1: [0,0,0,0,0,0,1,0,0,0,0,0],  # LEFT
+    2: [0,0,0,0,0,0,0,1,0,0,0,0],  # RIGHT
+    # ...
+}
+</code></pre>
+<h2 id="agent-action-processing">Agent Action Processing</h2>
+<h3 id="rl-agents-dqn-double-dqn-dueling-dqn">RL Agents (DQN, Double DQN, Dueling DQN)</h3>
+<p>RL agents directly output action IDs:</p>
+<pre><code class="language-python"># Agent internally selects action from discrete space
+action_id = agent.select_action(observation, info)  # Returns integer ID
+
+# MkEnvWrapper handles conversion to binary format for Stable-Retro
+binary_action = env_wrapper.action_mapping[action_id]  # e.g., [0,0,1,0,0,0,0,0]
+</code></pre>
+<h3 id="behavior-tree-agents">Behavior Tree Agents</h3>
+<p>BT agents process actions through multiple steps:</p>
+<ol>
+<li><strong>YAML Definition</strong>: Actions are defined with string names in the BT file:
+   ```yaml</li>
+<li>
+<p>type: Action
+     name: "Jump Attack"
+     properties:
+       action_id: UP_A  # String name matching action_map keys
+       frames_needed: 5
+   ```</p>
+</li>
+<li>
+<p><strong>Conversion in BTLoader</strong>: String names are converted to action IDs during BT construction:
+   <code>python
+   # In BTLoader.gen_node():
+   action_id_name = properties.get("action_id")  # "UP_A" from YAML
+   action_id = self.action_map.get(action_id_name, 0)  # Maps to integer ID</code></p>
+</li>
+<li>
+<p><strong>Action Selection</strong>: The BT returns the action ID of the active node:
+   <code>python
+   # In BTAgent.tick():
+   status = self.bt_root.tick(self.context)
+   action_id = self.bt_root.get_current_action()
+   return action_id  # Returns integer for environment</code></p>
+</li>
+<li>
+<p><strong>Binary Conversion</strong>: The environment wrapper converts the ID to binary format</p>
+</li>
+</ol>
+<h3 id="human-agents">Human Agents</h3>
+<p>Human agents convert keyboard inputs to action IDs:</p>
+<pre><code class="language-python"># 1. Key pressed → button name via key_map
+button_name = self.key_map.get(key)  # e.g., LEFT, RIGHT
+
+# 2. Build binary array from pressed buttons
+binary_array = [0] * len(self.buttons)
+for button in pressed_buttons:
+    if button in self.buttons:
+        idx = self.buttons.index(button)
+        binary_array[idx] = 1
+
+# 3. Find matching action ID from the binary array
+for action_id, action_binary in enumerate(self.action_mapping):
+    if action_binary == binary_array:
+        return action_id
+</code></pre>
+<h2 id="complete-action-flow">Complete Action Flow</h2>
+<pre><code>╔════════════════════════╗                   ╔════════════════════╗
+║     Agent Selection     ║                   ║  Environment Input ║
+╠════════════════════════╣                   ╠════════════════════╣
+║                        ║                   ║                    ║
+║  ┌─────────────────┐   ║                   ║  ┌──────────────┐  ║
+║  │ Human:          │   ║                   ║  │              │  ║
+║  │ Keyboard Input  │──&gt;║───┐               ║  │ Stable-Retro │  ║
+║  └─────────────────┘   ║   │               ║  │ Environment  │  ║
+║                        ║   │               ║  │              │  ║
+║  ┌─────────────────┐   ║   │  ┌────────┐   ║  │              │  ║
+║  │ RL:             │   ║   └─&gt;│        │   ║  │              │  ║
+║  │ Neural Network  │──&gt;║────&gt;│ Action │──&gt;║──&gt;│              │  ║
+║  └─────────────────┘   ║   ┌─&gt;│   ID   │   ║  │              │  ║
+║                        ║   │  │        │   ║  │              │  ║
+║  ┌─────────────────┐   ║   │  └────────┘   ║  │              │  ║
+║  │ BT:             │   ║   │               ║  │              │  ║
+║  │ Decision Tree   │──&gt;║───┘               ║  │              │  ║
+║  └─────────────────┘   ║                   ║  └──────────────┘  ║
+║                        ║                   ║                    ║
+╚════════════════════════╝                   ╚════════════════════╝
+           ▲                                           ▲
+           │                                           │
+           │                                           │
+           │       ┌─────────────────────────┐        │
+           │       │                         │        │
+           └───────┤    Action Conversion    ├────────┘
+                   │    ID &lt;=&gt; Binary        │
+                   │                         │
+                   └─────────────────────────┘
+</code></pre>
+<h2 id="visualizing-the-flow">Visualizing the Flow</h2>
+<pre><code>+------------------+          +---------------------------+          +-----------------------+
+|  Agent's Action  |   ---&gt;   |      Action Mapping       |   ---&gt;   |   Game Environment    |
+| (Discrete Index) |          |    (Binary Array)         |          |    (Button Presses)   |
++------------------+          +---------------------------+          +-----------------------+
+|        0         |          | [0, 0, 0, 0, 0, 0, 0, 0]  |          |        NEUTRAL        |
+|        1         |          | [0, 0, 0, 0, 0, 0, 0, 0]  |          |         'LEFT'        |
+|        2         |          | [0, 0, 0, 0, 0, 0, 0, 0]  |          |        'RIGHT'        |
+|        3         |          | [0, 0, 0, 0, 0, 0, 0, 0]  |          |    'LEFT' + 'DOWN'    |
+|        4         |          | [0, 0, 0, 0, 0, 0, 1, 0]  |          |    'RIGHT' + 'DOWN'   |
++------------------+          +---------------------------+          +-----------------------+
+</code></pre>
+<h2 id="implementation-details">Implementation Details</h2>
+<h3 id="shared-action-space">Shared Action Space</h3>
+<p>All agents share the same action space defined in env_config.yaml. This ensures:</p>
+<ul>
+<li>Consistent behavior across agent types</li>
+<li>Fair comparisons between different agents</li>
+<li>Compatibility with the Stable-Retro environment</li>
+</ul>
+<h3 id="adding-custom-actions">Adding Custom Actions</h3>
+<p>To add a new action:</p>
+<ol>
+<li>
+<p>Add the button combination to env_config.yaml:
+   ```yaml
+   actions:
+     # Existing actions...</p>
+<ul>
+<li>[DOWN]  # Add standalone crouch action
+   ```</li>
+</ul>
+</li>
+<li>
+<p>Rebuild the action mappings and update affected agents.</p>
+</li>
+</ol>
+<h2 id="debugging-tips">Debugging Tips</h2>
+<ul>
+<li>Check the <code>action_map</code> to see available actions: <code>print(action_gen.action_map)</code></li>
+<li>Ensure BT YAML files use action names that match the keys in <code>action_map</code></li>
+<li>If actions aren't working, verify they exist in env_config.yaml</li>
+<li>Use <code>print(binary_mapping[action_id])</code> to see the binary representation</li>
+</ul>
+<h2 id="related-files">Related Files</h2>
+<ul>
+<li><code>mk_ai/utils/action_generator.py</code>: Contains ActionGenerator class</li>
+<li><code>mk_ai/configs/env_config.yaml</code>: Defines buttons and valid actions</li>
+<li><code>mk_ai/agents/bt_agent.py</code>: BT agent implementation</li>
+<li><code>mk_ai/agents/BT/loader.py</code>: Loads and processes BT actions</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="arena.html" class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="adding_diff_game.html" class="btn btn-neutral float-right" title="Additional Games">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="arena.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="adding_diff_game.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Behaviour Tree - Kane vs Abel Arena</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Behaviour Tree";
+        var mkdocs_page_input_path = "behaviour_tree.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> Kane vs Abel Arena
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="arena.html">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Environment</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="action_space.html">Action Space</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="adding_diff_game.html">Additional Games</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Agents</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Behaviour Tree</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#introduction-to-behavior-trees">Introduction to Behavior Trees</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#behavior-tree-structure">Behavior Tree Structure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#node-types">Node Types</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#selector-node">Selector Node</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sequence-node">Sequence Node</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#condition-node">Condition Node</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#action-node">Action Node</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#creating-your-bt-file">Creating Your BT File</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#file-structure">File Structure</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#available-conditions">Available Conditions</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#available-actions">Available Actions</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#complete-example-aggressive-fighter">Complete Example: Aggressive Fighter</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#best-practices">Best Practices</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#debugging-bts">Debugging BTs</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#using-your-custom-bt">Using Your Custom BT</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#further-customization">Further Customization</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="human_input.html">Human Input</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="dqn.html">DQN</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">RL Training</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="model_training.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="curriculum_learning.html">Curriculum Learning</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="model_evaluation.html">Model Evaluation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="model_finetuning.html">Fine-tuning Models</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">Kane vs Abel Arena</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Agents</li>
+      <li class="breadcrumb-item active">Behaviour Tree</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="creating-custom-behavior-trees">Creating Custom Behavior Trees</h1>
+<p>This document explains how to create your own behavior trees for AI agents in the Kane vs Abel Mortal Kombat II environment.</p>
+<h2 id="introduction-to-behavior-trees">Introduction to Behavior Trees</h2>
+<p>Behavior Trees (BTs) are a hierarchical structure of nodes that control decision making for AI agents. They offer several advantages:</p>
+<ul>
+<li>Modular, reusable behavior components</li>
+<li>Visual representation of decision logic</li>
+<li>Readable and maintainable AI designs</li>
+<li>Effective for implementing complex game AI</li>
+</ul>
+<h2 id="behavior-tree-structure">Behavior Tree Structure</h2>
+<p>A behavior tree is defined in YAML format and consists of different node types arranged in a hierarchical structure:</p>
+<pre><code class="language-yaml">node:
+  type: Selector  # Root node type
+  name: &quot;Root&quot;    # Node name for debugging
+  children:       # Child nodes
+    - type: Sequence
+      name: &quot;Attack Sequence&quot;
+      children:
+        # More nodes...
+</code></pre>
+<h2 id="node-types">Node Types</h2>
+<h3 id="selector-node">Selector Node</h3>
+<p>Executes children from left to right until one succeeds. If all fail, the selector fails.</p>
+<pre><code class="language-yaml">type: Selector
+name: &quot;Choose Attack&quot;
+children:
+  - type: Action
+    name: &quot;High Attack&quot;
+    properties:
+      action_id: A
+      frames_needed: 3
+  - type: Action
+    name: &quot;Low Attack&quot;
+    properties:
+      action_id: DOWN_A
+      frames_needed: 3
+</code></pre>
+<h3 id="sequence-node">Sequence Node</h3>
+<p>Executes children from left to right until all succeed or one fails. If any fail, the sequence fails.</p>
+<pre><code class="language-yaml">type: Sequence
+name: &quot;Jump and Attack&quot;
+children:
+  - type: Action
+    name: &quot;Jump&quot;
+    properties:
+      action_id: UP
+      frames_needed: 2
+  - type: Action
+    name: &quot;Attack&quot;
+    properties:
+      action_id: A
+      frames_needed: 1
+</code></pre>
+<h3 id="condition-node">Condition Node</h3>
+<p>Tests a condition and returns success or failure based on the result.</p>
+<pre><code class="language-yaml">type: Condition
+name: &quot;Is Enemy Close&quot;
+properties:
+  condition: &quot;is_close_to_enemy&quot;  # Must match a function in ConditionsProvider
+</code></pre>
+<h3 id="action-node">Action Node</h3>
+<p>Performs a game action for a specified number of frames.</p>
+<pre><code class="language-yaml">type: Action
+name: &quot;Block&quot;
+properties:
+  action_id: B        # Must match an action in action_map
+  frames_needed: 5    # Number of frames to hold the action
+</code></pre>
+<h2 id="creating-your-bt-file">Creating Your BT File</h2>
+<h3 id="file-structure">File Structure</h3>
+<p>Create a YAML file with a single root node:</p>
+<pre><code class="language-yaml">node:
+  type: Selector
+  name: &quot;Fighter Behavior&quot;
+  children:
+    # Add your behavior tree nodes here
+</code></pre>
+<h3 id="available-conditions">Available Conditions</h3>
+<p>The following conditions are available from <code>ConditionsProvider</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Condition Name</th>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is_enemy_to_the_right</code></td>
+<td>Returns true when the enemy is to the right of the player</td>
+<td>Used for directional awareness</td>
+</tr>
+<tr>
+<td><code>is_enemy_to_the_left</code></td>
+<td>Returns true when the enemy is to the left of the player</td>
+<td>Used for directional awareness</td>
+</tr>
+<tr>
+<td><code>is_close_to_enemy</code></td>
+<td>Returns true when the enemy is within 50 units</td>
+<td>Used for close-range actions</td>
+</tr>
+<tr>
+<td><code>is_long_range_enemy</code></td>
+<td>Returns true when the enemy is beyond 50 units</td>
+<td>Used for ranged attacks</td>
+</tr>
+<tr>
+<td><code>is_medium_range_enemy</code></td>
+<td>Returns true when the enemy is between 50-120 units</td>
+<td>Good for jump-in attacks</td>
+</tr>
+</tbody>
+</table>
+<h3 id="available-actions">Available Actions</h3>
+<p>Actions are defined in env_config.yaml and mapped to names in the ActionGenerator. Common actions include:</p>
+<table>
+<thead>
+<tr>
+<th>Action Name</th>
+<th>Description</th>
+<th>Button Combination</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NEUTRAL</code></td>
+<td>No buttons pressed</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>LEFT</code></td>
+<td>Move left</td>
+<td>LEFT</td>
+</tr>
+<tr>
+<td><code>RIGHT</code></td>
+<td>Move right</td>
+<td>RIGHT</td>
+</tr>
+<tr>
+<td><code>UP</code></td>
+<td>Jump</td>
+<td>UP</td>
+</tr>
+<tr>
+<td><code>DOWN</code></td>
+<td>Crouch</td>
+<td>DOWN</td>
+</tr>
+<tr>
+<td><code>A</code></td>
+<td>A button</td>
+<td>A</td>
+</tr>
+<tr>
+<td><code>B</code></td>
+<td>B button</td>
+<td>B</td>
+</tr>
+<tr>
+<td><code>LEFT_DOWN</code></td>
+<td>Crouch + move left</td>
+<td>LEFT+DOWN</td>
+</tr>
+<tr>
+<td><code>RIGHT_DOWN</code></td>
+<td>Crouch + move right</td>
+<td>RIGHT+DOWN</td>
+</tr>
+<tr>
+<td><code>UP_A</code></td>
+<td>Jump + A</td>
+<td>UP+A</td>
+</tr>
+<tr>
+<td><code>DOWN_B</code></td>
+<td>Crouch + B</td>
+<td>DOWN+B</td>
+</tr>
+</tbody>
+</table>
+<h2 id="complete-example-aggressive-fighter">Complete Example: Aggressive Fighter</h2>
+<pre><code class="language-yaml">node:
+  type: Selector
+  name: &quot;Aggressive Fighter&quot;
+  children:
+    # Close Range Attack
+    - type: Sequence
+      name: &quot;Close Range Attack&quot;
+      children:
+        - type: Condition
+          name: &quot;Enemy is Close&quot;
+          properties:
+            condition: &quot;is_close_to_enemy&quot;
+        - type: Selector
+          name: &quot;Choose Close Attack&quot;
+          children:
+            - type: Action
+              name: &quot;Leg Sweep&quot;
+              properties:
+                action_id: DOWN_B
+                frames_needed: 3
+            - type: Action
+              name: &quot;Low Punch&quot;
+              properties:
+                action_id: DOWN_A
+                frames_needed: 3
+
+    # Medium Range Jump-In
+    - type: Sequence
+      name: &quot;Jump Attack Approach&quot;
+      children:
+        - type: Condition
+          name: &quot;Enemy is Medium Range&quot;
+          properties:
+            condition: &quot;is_medium_range_enemy&quot;
+        - type: Selector
+          name: &quot;Jump Direction&quot;
+          children:
+            - type: Sequence
+              name: &quot;Jump Right Attack&quot;
+              children:
+                - type: Condition
+                  name: &quot;Enemy to Right&quot;
+                  properties:
+                    condition: &quot;is_enemy_to_the_right&quot;
+                - type: Action
+                  name: &quot;Jump Forward Attack&quot;
+                  properties:
+                    action_id: RIGHT_UP_A
+                    frames_needed: 5
+            - type: Sequence
+              name: &quot;Jump Left Attack&quot;
+              children:
+                - type: Condition
+                  name: &quot;Enemy to Left&quot;
+                  properties:
+                    condition: &quot;is_enemy_to_the_left&quot;
+                - type: Action
+                  name: &quot;Jump Forward Attack&quot;
+                  properties:
+                    action_id: LEFT_UP_A
+                    frames_needed: 5
+
+    # Long Range Fireball
+    - type: Sequence
+      name: &quot;Long Range Attack&quot;
+      children:
+        - type: Condition
+          name: &quot;Enemy is Far&quot;
+          properties:
+            condition: &quot;is_long_range_enemy&quot;
+        - type: Action
+          name: &quot;Fireball Special&quot;
+          properties:
+            action_id: RIGHT_UP_B
+            frames_needed: 7
+
+    # Approach - Movement
+    - type: Selector
+      name: &quot;Movement&quot;
+      children:
+        - type: Sequence
+          name: &quot;Move Right&quot;
+          children:
+            - type: Condition
+              name: &quot;Enemy to Right&quot;
+              properties:
+                condition: &quot;is_enemy_to_the_right&quot;
+            - type: Action
+              name: &quot;Move Right&quot;
+              properties:
+                action_id: RIGHT
+                frames_needed: 3
+        - type: Sequence
+          name: &quot;Move Left&quot;
+          children:
+            - type: Condition
+              name: &quot;Enemy to Left&quot;
+              properties:
+                condition: &quot;is_enemy_to_the_left&quot;
+            - type: Action
+              name: &quot;Move Left&quot;
+              properties:
+                action_id: LEFT
+                frames_needed: 3
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li><strong>Prioritize actions properly</strong>: Place the most important behaviors at the top of selectors</li>
+<li><strong>Balance reactivity</strong>: Don't set <code>frames_needed</code> too high or your agent will be unresponsive</li>
+<li><strong>Test incrementally</strong>: Start with a simple BT and gradually add complexity</li>
+<li><strong>Use meaningful node names</strong>: They help when debugging behaviors</li>
+<li><strong>Consider opponent position</strong>: Always check enemy position before directional actions</li>
+<li><strong>Add fallback behaviors</strong>: Ensure your tree has default actions if no conditions match</li>
+</ol>
+<h2 id="debugging-bts">Debugging BTs</h2>
+<ol>
+<li><strong>Check action names</strong>: Ensure they match exactly with keys in <code>action_map</code></li>
+<li><strong>Verify conditions</strong>: Make sure condition names match functions in <code>ConditionsProvider</code></li>
+<li><strong>Start simple</strong>: Begin with a few nodes and gradually expand</li>
+<li><strong>Test against stationary opponents</strong> first to verify behavior</li>
+<li><strong>Watch for indentation errors</strong> in YAML that may break the tree structure</li>
+</ol>
+<h2 id="using-your-custom-bt">Using Your Custom BT</h2>
+<p>Run the arena with your custom BT file:</p>
+<pre><code class="language-bash">python arena.py --p1-type bt --p1-bt-file path/to/your_bt.yaml
+</code></pre>
+<p>Or for player 2:</p>
+<pre><code class="language-bash">python arena.py --p2-type bt --p2-bt-file path/to/your_bt.yaml
+</code></pre>
+<h2 id="further-customization">Further Customization</h2>
+<p>To add custom conditions:
+1. Add your function to the <code>ConditionsProvider</code> class in <code>conditions.py</code>
+2. Use your new condition name in the BT YAML file</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="adding_diff_game.html" class="btn btn-neutral float-left" title="Additional Games"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="human_input.html" class="btn btn-neutral float-right" title="Human Input">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="adding_diff_game.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="human_input.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
