@@ -1,6 +1,0 @@
-node:
-  type: Action
-  name: "Bad Action"
-  properties:
-    action_id: "MOVE_RIGHT_ID"
-    frames_needed: -3
