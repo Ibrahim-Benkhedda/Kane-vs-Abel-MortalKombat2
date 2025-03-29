@@ -10,6 +10,7 @@ class AgentConfig:
     """
     agent_type: str # "human", "dqn, double_dqn, dueling_ddqn", "bt"
     model_path: Optional[str] = None 
+    bt_file_path: Optional[str] = None
     player_num: int = 1
 
 @dataclass
@@ -49,7 +50,10 @@ class AgentFactory:
             )
         
         elif config.agent_type == "bt":
-            return BTAgent(buttons)
+            return BTAgent(
+                buttons=buttons,
+                bt_file_path=config.bt_file_path
+            )
         
         elif config.agent_type == "dqn":
             return DQNAgent(

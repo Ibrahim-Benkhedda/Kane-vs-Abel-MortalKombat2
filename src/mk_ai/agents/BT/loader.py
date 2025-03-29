@@ -1,6 +1,6 @@
 import yaml 
 from mk_ai.agents.BT.nodes import *
-from mk_ai.agents.BT.conditions import is_close_to_enemy, is_enemy_to_the_left, is_enemy_to_the_right
+from mk_ai.agents.BT.conditions import is_close_to_enemy, is_enemy_to_the_left, is_enemy_to_the_right, is_long_range_enemy
 
 class BTLoader:
     def __init__(self, condition_map: dict, action_map: dict) -> None:
@@ -99,7 +99,8 @@ if __name__ == "__main__":
     condition_map = {
         "is_enemy_to_the_right": is_enemy_to_the_right,
         "is_enemy_to_the_left": is_enemy_to_the_left,
-        "is_close_to_enemy": is_close_to_enemy
+        "is_close_to_enemy": is_close_to_enemy,
+        "is_long_range_enemy": is_long_range_enemy,
     }
     action_map = {
         "NEUTRAL_ID": 0,

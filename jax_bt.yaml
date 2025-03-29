@@ -1,0 +1,135 @@
+node:
+  type: Selector
+  name: "Jax Fighting Strategy"
+  children:
+    # Close Range Strategy - Dominant Grab Game
+    - type: Sequence
+      name: "Close Range Domination"
+      children:
+        - type: Condition
+          name: "Close to Enemy"
+          properties:
+            condition: "is_close_to_enemy"
+        - type: Selector
+          name: "Grab Attacks"
+          children:
+            # Gotcha Grab sequence - Jax's signature throw
+            - type: Sequence
+              name: "Gotcha Grab Setup"
+              children:
+                - type: Action
+                  name: "Forward Step"
+                  properties:
+                    action_id: RIGHT
+                    frames_needed: 3
+                - type: Action
+                  name: "Second Forward"
+                  properties:
+                    action_id: RIGHT
+                    frames_needed: 2
+                - type: Action
+                  name: "Low Punch Finish"
+                  properties:
+                    action_id: A
+                    frames_needed: 5
+            
+            # Back Breaker attempt (alternative grab)
+            - type: Sequence
+              name: "Back Breaker Setup"
+              children:
+                - type: Action
+                  name: "Jump"
+                  properties:
+                    action_id: UP
+                    frames_needed: 4
+                - type: Action
+                  name: "Block Mid-Air"
+                  properties:
+                    action_id: B
+                    frames_needed: 6
+            
+            # Quick attacks if grab fails
+            - type: Action
+              name: "Quick Punch"
+              properties:
+                action_id: A
+                frames_needed: 3
+
+    # Long Range Strategy - Aggressive Jump Attacks
+    - type: Sequence
+      name: "Long Range Strategy"
+      children:
+        - type: Condition
+          name: "Enemy is Far"
+          properties:
+            condition: "is_long_range_enemy"
+        - type: Selector
+          name: "Jump Attack Options"
+          children:
+            # If enemy is on the RIGHT, jump LEFT (toward enemy)
+            - type: Sequence
+              name: "Jump Toward Right"
+              children:
+                - type: Condition
+                  name: "Enemy to Right"
+                  properties:
+                    condition: "is_enemy_to_the_right"
+                - type: Selector
+                  name: "Left Jump Attack Variants"
+                  children:
+                    - type: Action
+                      name: "Left Jump Attack B"
+                      properties:
+                        action_id: LEFT_UP_B
+                        frames_needed: 10
+                    - type: Action
+                      name: "Left Jump Attack A"
+                      properties:
+                        action_id: LEFT_UP_A
+                        frames_needed: 10
+                    - type: Action
+                      name: "Left Jump Attack C"
+                      properties:
+                        action_id: LEFT_UP_C
+                        frames_needed: 10
+            
+            # If enemy is on the LEFT, jump RIGHT (toward enemy)
+            - type: Sequence
+              name: "Jump Toward Left"
+              children:
+                - type: Condition
+                  name: "Enemy to Left"
+                  properties:
+                    condition: "is_enemy_to_the_left"
+                - type: Selector
+                  name: "Right Jump Attack Variants"
+                  children:
+                    - type: Action
+                      name: "Right Jump Attack B"
+                      properties:
+                        action_id: RIGHT_UP_B
+                        frames_needed: 10
+                    - type: Action
+                      name: "Right Jump Attack A"
+                      properties:
+                        action_id: RIGHT_UP_A
+                        frames_needed: 10
+                    - type: Action
+                      name: "Right Jump Attack C"
+                      properties:
+                        action_id: RIGHT_UP_C
+                        frames_needed: 10
+            
+            # Regular jump as fallback
+            - type: Action
+              name: "Neutral Jump"
+              properties:
+                action_id: UP
+                frames_needed: 8
+    
+    # Defensive/Default Strategy
+    - type: Action
+      name: "Block"
+      properties:
+        action_id: B
+        frames_needed: 3

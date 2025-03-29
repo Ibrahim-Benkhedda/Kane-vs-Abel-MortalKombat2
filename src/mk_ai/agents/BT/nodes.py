@@ -160,7 +160,7 @@ class Condition(Node):
         # Evaluate the condition.
         result = self.condition(context)
         # Output debug information showing the condition's result.
-        print(f"[DEBUG Condition: {self.name}] {result} => {'SUCCESS' if result else 'FAILURE'}")
+        # print(f"[DEBUG Condition: {self.name}] {result} => {'SUCCESS' if result else 'FAILURE'}")
         # Return SUCCESS if condition is True, else FAILURE.
         return NodeStatus.SUCCESS if result else NodeStatus.FAILURE
 

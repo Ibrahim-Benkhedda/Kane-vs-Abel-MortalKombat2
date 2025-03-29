@@ -2,6 +2,7 @@ from .list_games import print_available_games
 from .action_generator import ActionGenerator
 from .frameskip import DeterministicFrameSkip, StochasticFrameSkip
 from .schedulers import Schedules
+from .elo_manager import EloManager
 
 
 __all__ = [
@@ -10,4 +11,5 @@ __all__ = [
     "StochasticFrameSkip",
     "ActionGenerator",
     "Schedules",
+    "EloManager"
 ]

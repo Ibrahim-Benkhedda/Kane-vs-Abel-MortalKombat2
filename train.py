@@ -15,8 +15,7 @@ from stable_baselines3.common.callbacks import CallbackList, EvalCallback
 
 MODEL_DIR: str = "models"
 LOG_DIR: str = "logs"
-TOTAL_TIMESTEPS: str = 20_000_000
-
+TOTAL_TIMESTEPS: str = 16_000_000
 
 # ========================================================================================
 # Environment Creation
@@ -31,7 +30,7 @@ def make_env(states: list[str]) -> Callable[[], MkEnvWrapper]:
             game="MortalKombatII-Genesis",
             states=states,
             render_mode="none",
-            record="replays"
+            record="data/replays/kane"
         )
 
         env = DeterministicFrameSkip(env, n=4)
@@ -57,7 +56,9 @@ def train() -> None:
     """
 
     # Define the states for each tier.
-    tier1_states: List[str] = ["Level1.LiuKangVsJax"]
+    tier1_states: List[str] = [
+        "Level1.LiuKangVsJax", "VeryEasy.LiuKang-02", "VeryEasy.LiuKang-03"
+    ]
     tier2_states: List[str] = [
         "Level1.LiuKangVsJax", "VeryEasy.LiuKang-02", "VeryEasy.LiuKang-03",
         "VeryEasy.LiuKang-04", "VeryEasy.LiuKang-05" , 
@@ -67,9 +68,13 @@ def train() -> None:
         "VeryEasy.LiuKang-04", "VeryEasy.LiuKang-05", "VeryEasy.LiuKang-06",
         "VeryEasy.LiuKang-07", "VeryEasy.LiuKang-08"
     ]
-    tier4_states: List[str] = ["LiuKangVsBaraka_VeryHard_01", "LiuKangVsReptile_VeryHard_02", "LiuKangVsJax_VeryHard_03"]
+    # tier4_states: List[str] = [
+    #     "LiuKangVsBaraka_VeryHard_01",
+    #     "LiuKangVsReptile_VeryHard_02",
+    #     "LiuKangVsJax_VeryHard_03"
+    # ]
 
-    tiered_states: List[List[str]] = [tier1_states, tier2_states, tier3_states, tier4_states]
+    tiered_states: List[List[str]] = [tier1_states, tier2_states, tier3_states]
 
 
     # Create the main training environment using SubprocVecEnv with num_envs of processes.
@@ -99,16 +104,16 @@ def train() -> None:
         # train_freq=4,  
         # gradient_steps=2, 
         # target_update_interval=5000,
-        tensorboard_log="./experiments/DuelingDDQN/"
+        tensorboard_log="./experiments_finals/curriculum/"
     )
 
     # Optionally, create a curriculum callback (currently commented out)
-    # curriculum_callback = CurriculumCallback(
-    #     vec_env=venv,
-    #     tiered_states=tiered_states,
-    #     verbose=1,
-    #     buffer_size=25
-    # )
+    curriculum_callback = CurriculumCallback(
+        vec_env=venv,
+        tiered_states=tiered_states,
+        verbose=1,
+        buffer_size=100
+    )
 
     # Define the desired evaluation interval in environment steps.
     desired_eval_interval: int = 500_000  # evaluation every defined number ENVIRONMENT steps
@@ -121,8 +126,8 @@ def train() -> None:
     # Create the custom evaluation callback.
     eval_callback = CustomEvalCallback(
         eval_env=eval_env,
-        best_model_save_path="./experiments/DuelingDDQN/best_model-2",
-        log_path="./experiments/DuelingDDQN/eval_logs-2",
+        best_model_save_path="./experiments_finals/curriculum/best_model-Exp-A",
+        log_path="./experiments_finals/curriculum/eval_logs-Exp-A",
         eval_freq=eval_freq,
         n_eval_episodes=10,
         deterministic=False,  
@@ -131,7 +136,7 @@ def train() -> None:
     )
 
     # Create a callback list. (Here, only the evaluation callback is used right now)
-    callback_list = CallbackList([eval_callback])
+    callback_list = CallbackList([eval_callback, curriculum_callback])
 
     # Train the model for the total timesteps.
     model.learn(
@@ -141,7 +146,7 @@ def train() -> None:
     )
 
     # Save the final trained model
-    model.save("DueilingDoubleDQN_without_curriculum_4M_VeryHardVsJax_Exp_2")
+    model.save("models/kane/DuellingDDQN_curriculum_16M_VeryEasy_3_Tiers")
 
     # Close the vectorized environment.
     venv.close()

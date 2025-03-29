@@ -1,0 +1,115 @@
+node:
+  type: Selector
+  name: "Aggressive Fighter"
+  children:
+    # Close Range Attacks - High priority
+    - type: Sequence
+      name: "Close Range Attack"
+      children:
+        - type: Condition
+          name: "Enemy is Close"
+          properties:
+            condition: "is_close_to_enemy"
+        - type: Selector
+          name: "Choose Close Attack"
+          children:
+            - type: Action
+              name: "Low Punch"
+              properties:
+                action_id: RIGHT_DOWN_A
+                frames_needed: 3  # Reduced frames for quicker attacks
+            - type: Action
+              name: "Low Kick"
+              properties:
+                action_id: RIGHT_DOWN_B
+                frames_needed: 3
+            - type: Action
+              name: "Leg Sweep"
+              properties:
+                action_id: DOWN_B
+                frames_needed: 3
+            - type: Action
+              name: "Basic Punch"
+              properties:
+                action_id: A
+                frames_needed: 2
+    
+    # Long Range Attacks - Second priority
+    - type: Sequence
+      name: "Long Range Attack"
+      children:
+        - type: Condition
+          name: "Enemy is Far"
+          properties:
+            condition: "is_long_range_enemy"
+        - type: Selector
+          name: "Choose Special Move"
+          children:
+            - type: Action
+              name: "Fireball Special"
+              properties:
+                action_id: RIGHT_UP_B
+                frames_needed: 7
+            - type: Action
+              name: "Alternative Special"
+              properties:
+                action_id: RIGHT_UP_A
+                frames_needed: 7
+            - type: Action
+              name: "Last Resort Special"
+              properties:
+                action_id: RIGHT_UP_C
+                frames_needed: 7
+    
+    # Aggressive Movement - Third priority with direction awareness
+    - type: Selector
+      name: "Aggressive Movement"
+      children:
+        # Attack direction determined by enemy position
+        - type: Sequence
+          name: "Attack Right"
+          children:
+            - type: Condition
+              name: "Enemy to Right"
+              properties:
+                condition: "is_enemy_to_the_right"
+            - type: Selector
+              name: "Move Right Actions"
+              children:
+                - type: Action
+                  name: "Jump Forward"
+                  properties:
+                    action_id: RIGHT_UP
+                    frames_needed: 4
+                - type: Action
+                  name: "Move Right"
+                  properties:
+                    action_id: RIGHT
+                    frames_needed: 2
+        - type: Sequence
+          name: "Attack Left"
+          children:
+            - type: Condition
+              name: "Enemy to Left"
+              properties:
+                condition: "is_enemy_to_the_left"
+            - type: Selector
+              name: "Move Left Actions"
+              children:
+                - type: Action
+                  name: "Jump Forward"
+                  properties:
+                    action_id: LEFT_UP
+                    frames_needed: 4
+                - type: Action
+                  name: "Move Left"
+                  properties:
+                    action_id: LEFT
+                    frames_needed: 2
+                    
+    # Fallback - just do something if all else fails
+    - type: Action
+      name: "Random Attack"
+      properties:
+        action_id: B
+        frames_needed: 1

@@ -1,15 +1,12 @@
-import numpy as np 
+import numpy as np
+import os
 
 from typing import List, Tuple, Dict, Any, Optional, Callable
 from mk_ai.agents import Agent
 from mk_ai.agents.BT.nodes import NodeStatus, Node
 from mk_ai.agents.BT.game_context import GameStateContext
 from mk_ai.agents.BT.loader import BTLoader
-from mk_ai.agents.BT.conditions import (
-    is_enemy_to_the_right,
-    is_enemy_to_the_left,
-    is_close_to_enemy
-)
+from mk_ai.agents.BT.conditions import ConditionsProvider
 from mk_ai.utils import ActionGenerator
 from mk_ai.configs import BUTTONS
 
@@ -18,33 +15,41 @@ class BTAgent(Agent):
     """
     Encapsulates the Behavior Tree and a blackboard (GameStateContext).
     """
-    def __init__(self, buttons: List[str]) -> None:
+    def __init__(self, buttons: List[str], bt_file_path: Optional[str] = None) -> None:
         """
         Paramters:
             buttons (List[str]): The list of environment buttons.
+            bt_file_path (Optional[str]): Path to the behavior tree YAML file.
         """
         self.buttons = buttons
         self.context = GameStateContext()
         
-        # TODO:
-        # - get action map from ActionGenerator
+        
+
+        # file path to the action config and behavior tree files
+        action_config_file = os.path.join(os.path.dirname(__file__), "..", "configs", "env_config.yaml")
+
+        # Default behavior tree path if none provided
+        if bt_file_path is None:
+            bt_file_path = os.path.join(os.path.dirname(__file__), "BT", "default_bt.yaml")
 
         # Map condition names from YAML to actual functions.
-        condition_map: Dict[str, Callable[[Any], bool]] = {
-            "is_enemy_to_the_right": is_enemy_to_the_right,
-            "is_enemy_to_the_left": is_enemy_to_the_left,
-            "is_close_to_enemy": is_close_to_enemy
-        }
-        # Map action placeholder names to actual action IDs.
-        action_map: Dict[str, int] = {
-            "NEUTRAL_ID": 0,
-            "MOVE_RIGHT_ID": 1,
-            "MOVE_LEFT_ID": 2,
-            "JUMP_ID": 3
-        }
+        condition_map = ConditionsProvider.gen_condition_map()
 
+        print(f"[BT::BTAgent] Loading BT from {bt_file_path}")
+        print(f"[BT::BTAgent] Available conditions: {condition_map.keys()}")
+        print(f"[BT::BTAgent] Available actions: {self.buttons}")
+
+        # Load the action generator and build the action map
+        action_gen = ActionGenerator(filename=action_config_file)
+        action_gen.build()
+
+        # Map action placeholder names to actual action IDs.
+        action_map: Dict[str, int] = action_gen.action_map
+
+        # Load and Generate the Behavior Tree from the YAML file
         bt_loader: BTLoader = BTLoader(condition_map, action_map)
-        self.bt_root: Node = bt_loader.gen_bt("bt.yaml")
+        self.bt_root: Node = bt_loader.gen_bt(yaml_file=bt_file_path)
 
     def action_to_env(self, actions: List[str]) -> List[int]:
         """
@@ -71,7 +76,7 @@ class BTAgent(Agent):
         self.context.player_y = info.get("y_position", 0)
         self.context.enemy_y  = info.get("enemy_y_position", 0)
 
-        print(f"[BT::BTAgent] self.context.get_distance_x")
+        # print(f"[BT::BTAgent] self.context.get_distance_x")
 
     def tick(self, obs: np.ndarray, info: Dict[str, Any]) -> int:
         """
@@ -97,6 +102,7 @@ class BTAgent(Agent):
         if status in (NodeStatus.SUCCESS, NodeStatus.FAILURE):
             self.bt_root.reset()
 
+        # If the BT failed or no valid action was found, return the fallback action (NEUTRAL)
         if status == NodeStatus.FAILURE or action_id is None:
             return 0  # Fallback/no-op action.
         return action_id

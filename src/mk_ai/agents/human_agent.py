@@ -9,7 +9,7 @@ from mk_ai.configs import P1_KEY_MAP, P2_KEY_MAP
 class HumanAgent(Agent):
     """Handles human input through keyboard."""
     
-    def __init__(self, action_mapping: List[List[int]], buttons: List[str], player_num: int = 1):
+    def __init__(self, action_mapping: List[List[int]], buttons: List[str], player_num: int = 1, username: Optional[str] = None):
         """
         Initialize a HumanAgent.
 
@@ -22,6 +22,7 @@ class HumanAgent(Agent):
         self.buttons: List[str] = buttons
         self.pressed_keys: Set[int] = set()
         self.key_map = P1_KEY_MAP if player_num == 1 else P2_KEY_MAP
+        self.username = username or f"HumanPlayer{player_num}"
 
     def update_keys(self, pressed_keys: set):
         """
@@ -51,7 +52,7 @@ class HumanAgent(Agent):
                     action_array[self.buttons.index(button)] = 1
         
         # Debug: Print generated action array
-        print(f"[HumanAgent] Player {1 if self.key_map is P1_KEY_MAP else 2} action array:", action_array)
+        # print(f"[HumanAgent] Player {1 if self.key_map is P1_KEY_MAP else 2} action array:", action_array)
 
         # Find matching action ID
         for action_id, arr in enumerate(self.action_mapping):
