@@ -8,6 +8,16 @@ The following example shows **Kane**, using Double DQN architecture playing with
   <img src="data/replays/LiuKang-Jax-VeryEasy.gif" alt="Kane vs Very Easy Opponent">
 </p>
 
+# Documentation
+**For comprehensive documentation, visit [project documentation site](https://ibrahim-benkhedda.github.io/Kane-vs-Abel-MortalKombat2/arena.html).**
+
+The documentation includes:
+- Agent types and implementation details
+- Command-line interface options
+- Configuration guidance
+- Examples and usage scenarios
+- Behavior tree customization
+- Model training and evaluation
 
 # Packages 
 This project is developed and tested using Python **3.10.12** on **WSL Ubuntu**. The project depends on the following packages:
